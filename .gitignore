@@ -37,4 +37,7 @@ Release/
 .vscode/
 .idea/
 *.swp
-*~   
+*~
+
+# build folder
+build/
