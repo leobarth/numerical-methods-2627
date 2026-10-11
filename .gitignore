@@ -41,3 +41,6 @@ Release/
 
 # build folder
 build/
+
+# python related
+.venv/
