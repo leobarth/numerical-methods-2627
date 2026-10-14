@@ -64,21 +64,28 @@ double my_exp(double x, int n) {
 }
 
 int main() {
+    FILE *f = fopen("results_1_6.txt", "w");
+    if (f == NULL) {
+        perror("Error when creating file.");
+        return 1;
+    }
+    
     // M1
-    printf("M1 results:\n");
+    fprintf(f, "M1 results:\n");
     for (int n = 3; n <= 30; n += 3) {
-        printf("n = %d: %.10f\n", n, my_exp(-5.5, n));
+        fprintf(f, "n = %d: %.10f\n", n, my_exp(-5.5, n));
     }
 
     //M2
-    printf("M2 results:\n");
+    fprintf(f, "\nM2 results:\n");
     for (int n = 3; n <= 30; n += 3) {
-        printf("n = %d: %.10f\n", n, 1 / my_exp(5.5, n));
+        fprintf(f, "n = %d: %.10f\n", n, 1 / my_exp(5.5, n));
     }
 
     //M3
-    printf("M3 results:\n");
+    fprintf(f, "\nM3 results:\n");
     for (int n = 3; n <= 30; n += 3) {
-        printf("n = %d: %.10f\n", n, power(my_exp(0.5, n), -11));
+        fprintf(f, "n = %d: %.10f\n", n, power(my_exp(0.5, n), -11));
     }
+    fclose(f);
 }
