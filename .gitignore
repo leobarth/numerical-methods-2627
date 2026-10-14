@@ -39,8 +39,5 @@ Release/
 *.swp
 *~
 
-# build folder
-build/
-
 # python related
 .venv/
