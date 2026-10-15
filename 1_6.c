@@ -4,10 +4,9 @@
 #include <stdlib.h>
 
 // power function implementation for exponents n and bases x
+
 double power(double x, int n) {
     // catches trivial inputs in the beginning, and multiplies x with itself n times to get the result (n < 0 path ensures correct reciprocal handling)
-    
-    // absolute value of n for loop end condition
     if (n == 0) {
         // especially returns 1 for 0⁰ to correctly evaluate exp(0, n)
         return 1;
@@ -15,6 +14,7 @@ double power(double x, int n) {
     if (x == 0) {
         return 0;
     }
+    // absolute value of n for loop end condition
     int abs_n = n;
     if (n < 0) {
         abs_n = -n;
@@ -29,38 +29,18 @@ double power(double x, int n) {
     return output;
 }
 
-// factorial function implementation with integer input k
-// double to prevent integer overflow
-double factorial(int k) {
-    // catches trivial inputs in the beginning and iterates k times to get the factorial
-
-    if (k == 0) {
-        return 1;
-    }
-    if (k < 0) {
-        fprintf(stderr, "factorial input may not be negative, got: %d", k);
-        exit(1);
-    }
-    double output = 1.0;
-    for (int i = 1; i <= k; i++){
-        output *= i;
-    }
-    return output;
-}
-
 // required implementation of the exponential function
-double my_exp(double x, int n) {
-    // catches n < 0, correctly evaluates for n = 0 (see
-    // power function implementation) and loops over outer
-    // sum to get the taylor-expression
-    if (n < 0) {
-        fprintf(stderr, "Taylor-series cutoff may not be negative, got: %d", n);
+double my_exp(double x, unsigned int n) {
+    // correctly evaluates for n = 0 and loops over outer sum to get the Taylor-expression
+    // every term T_k in the Taylor-expansion is simply T_(k-1) * (x / k)
+    double sum = 1.0;
+    double term = 1.0;
+
+    for (unsigned int k = 1; k <= n; k++) {
+        term *= x / k;
+        sum += term;
     }
-    double output = 0;
-    for (int k = 0; k <= n; k++) {
-        output += (power(x, k) / factorial(k));
-    }
-    return output;
+    return sum;
 }
 
 int main() {
@@ -87,5 +67,6 @@ int main() {
     for (int n = 3; n <= 30; n += 3) {
         fprintf(f, "n = %d: %.10f\n", n, power(my_exp(0.5, n), -11));
     }
+
     fclose(f);
 }
